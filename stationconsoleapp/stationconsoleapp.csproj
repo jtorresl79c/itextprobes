@@ -123,13 +123,21 @@
     <Compile Include="OrdenInspeccion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="resources\united_states.csv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="files\" />
+    <Folder Include="iTextGeneratedFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\backgroundPC5.jpg" />
+    <Content Include="resources\dog.bmp" />
+    <Content Include="resources\fox.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
