@@ -26,10 +26,10 @@ namespace stationconsoleapp
             string filepath = Environment.CurrentDirectory;
             string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]) + SEPARATOR;
             
-            string DOG = routePath + "img" + SEPARATOR + "dog.bmp";
-            string FOX = routePath + "img" + SEPARATOR + "fox.bmp";
+            string DOG = routePath + "resources" + SEPARATOR + "dog.bmp";
+            string FOX = routePath + "resources" + SEPARATOR + "fox.bmp";
             
-            string dest = routePath + "files" + SEPARATOR + System.IO.Path.GetRandomFileName() + ".pdf";
+            string dest = routePath + "iTextGeneratedFiles" + SEPARATOR + System.IO.Path.GetRandomFileName() + ".pdf";
             var writer = new PdfWriter(dest); // La funcion que crea literalmente el archivo en disco, sus parametros puede ser un string como aqui, o un obj de tipo http.response
             var pdf = new PdfDocument(writer); // Esto es lo que maneja el contenido que creamos, pero en un lenguaje de pdf creo, 
             PageSize pageSize = PageSize.LETTER;

@@ -24,7 +24,7 @@ namespace stationconsoleapp
         {
             string filepath = Environment.CurrentDirectory;
             string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]);
-            string dest = routePath + System.IO.Path.DirectorySeparatorChar + "files" + System.IO.Path.DirectorySeparatorChar + System.IO.Path.GetRandomFileName() + ".pdf";
+            string dest = routePath + System.IO.Path.DirectorySeparatorChar + "iTextGeneratedFiles" + System.IO.Path.DirectorySeparatorChar + System.IO.Path.GetRandomFileName() + ".pdf";
 
             var writer = new PdfWriter(dest); // La funcion que crea literalmente el archivo en disco, sus parametros puede ser un string como aqui, o un obj de tipo http.response
             var pdf = new PdfDocument(writer); // Esto es lo que maneja el contenido que creamos, pero en un lenguaje de pdf creo, 
@@ -39,7 +39,7 @@ namespace stationconsoleapp
 
 
             // Esto agrega la imagen de fondo
-            string IMAGE = routePath + System.IO.Path.DirectorySeparatorChar + "img" + System.IO.Path.DirectorySeparatorChar + "backgroundPC5.jpg";
+            string IMAGE = routePath + System.IO.Path.DirectorySeparatorChar + "resources" + System.IO.Path.DirectorySeparatorChar + "backgroundPC5.jpg";
             ImageData image = ImageDataFactory.Create(IMAGE);
             PdfCanvas canvas = new PdfCanvas(pdf.AddNewPage());
             canvas.SaveState();
