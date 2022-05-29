@@ -39,7 +39,7 @@ namespace stationconsoleapp
 
 
             // Esto agrega la imagen de fondo
-            string IMAGE = routePath + System.IO.Path.DirectorySeparatorChar + "backgroundPC5.jpg";
+            string IMAGE = routePath + System.IO.Path.DirectorySeparatorChar + "img" + System.IO.Path.DirectorySeparatorChar + "backgroundPC5.jpg";
             ImageData image = ImageDataFactory.Create(IMAGE);
             PdfCanvas canvas = new PdfCanvas(pdf.AddNewPage());
             canvas.SaveState();

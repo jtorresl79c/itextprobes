@@ -15,6 +15,10 @@ namespace stationconsoleapp
             //ordenInspeccion.generateFile();
 
 
+            ImageExample imageExample = new ImageExample();
+            imageExample.generateFile();
+
+
 
         }
     }
