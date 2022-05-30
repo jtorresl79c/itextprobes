@@ -119,6 +119,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasExample.cs" />
     <Compile Include="ImageExample.cs" />
     <Compile Include="OrdenInspeccion.cs" />
     <Compile Include="Program.cs" />

@@ -18,9 +18,11 @@ namespace stationconsoleapp
             //ImageExample imageExample = new ImageExample();
             //imageExample.generateFile();
 
-            TableExample tableExample = new TableExample();
+            //TableExample tableExample = new TableExample();
+            //tableExample.generateFile();
 
-            tableExample.generateFile();
+            CanvasExample canvasExample = new CanvasExample();
+            canvasExample.generateFile();
 
 
 
