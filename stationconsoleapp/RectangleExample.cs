@@ -38,96 +38,13 @@ namespace stationconsoleapp
             var canvas = new PdfCanvas(page);
 
 
-            //Store a "backup" of the current graphical state
+            Rectangle rect = new Rectangle(0, 300, 400, 50);
+            Paragraph p = new Paragraph("REVISO");
 
-            canvas.SaveState();
+            new Canvas(canvas, rect).Add(p);
 
-
-
-            //Change the page's coordinate system so that 0,0 is at the center
-
-            canvas.ConcatMatrix(1, 0, 0, 1, ps.GetWidth() / 2, ps.GetHeight() / 2);
-
-
-
-
-            // When joining lines we want them to use a rounded corner
-
-            canvas.SetLineJoinStyle(PdfCanvasConstants.LineJoinStyle.ROUND);
-
-
-
-            //Draw X axis
-
-            canvas.MoveTo(-(ps.GetWidth() / 2 - 15), 0)
-
-                    .LineTo(ps.GetWidth() / 2 - 15, 0)
-
-                    .Stroke();
-
-
-
-            //Draw Y axis
-
-            canvas.MoveTo(0, -(ps.GetHeight() / 2 - 15))
-
-                    .LineTo(0, ps.GetHeight() / 2 - 15)
-
-                    .Stroke();
-
-
-
-            //Draw X axis arrow
-
-            canvas.MoveTo(ps.GetWidth() / 2 - 25, -10)
-
-                    .LineTo(ps.GetWidth() / 2 - 15, 0)
-
-                    .LineTo(ps.GetWidth() / 2 - 25, 10)
-
-                    .Stroke();
-
-
-
-            //Draw Y axis arrow
-
-            canvas.MoveTo(-10, ps.GetHeight() / 2 - 25)
-
-                    .LineTo(0, ps.GetHeight() / 2 - 15)
-
-                    .LineTo(10, ps.GetHeight() / 2 - 25)
-
-                    .Stroke();
-
-
-
-            //Draw X serif
-
-            for (int i = -((int)ps.GetWidth() / 2 - 61); i < ((int)ps.GetWidth() / 2 - 60); i += 40)
-            {
-
-                canvas.MoveTo(i, 5).LineTo(i, -5);
-
-            }
-
-            //Draw Y serif
-
-            for (int j = -((int)ps.GetHeight() / 2 - 57); j < ((int)ps.GetHeight() / 2 - 56); j += 40)
-            {
-
-                canvas.MoveTo(5, j).LineTo(-5, j);
-
-            }
-
-            canvas.Stroke();
-
-
-
-            //"Restore" our "backup" which resets any changes that the above made
-
-            canvas.RestoreState();
-
-
+            canvas.Rectangle(rect);
+            //canvas.Stroke();
 
             pdf.Close();
 
