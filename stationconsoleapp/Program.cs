@@ -27,8 +27,11 @@ namespace stationconsoleapp
             //RectangleExample rectangleExample = new RectangleExample();
             //rectangleExample.generateFile();
 
-            TableExample tableExample = new TableExample();
-            tableExample.generateRightTable();
+            //TableExample tableExample = new TableExample();
+            //tableExample.generateRightTable();
+
+            OficioSimulacro oficioSimulacro = new OficioSimulacro();
+            oficioSimulacro.generateFile();
 
         }
     }
