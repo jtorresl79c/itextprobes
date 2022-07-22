@@ -21,10 +21,14 @@ namespace stationconsoleapp
             //TableExample tableExample = new TableExample();
             //tableExample.generateFile();
 
-            CanvasExample canvasExample = new CanvasExample();
-            canvasExample.generateFile();
+            //CanvasExample canvasExample = new CanvasExample();
+            //canvasExample.generateFile();
 
+            //RectangleExample rectangleExample = new RectangleExample();
+            //rectangleExample.generateFile();
 
+            TableExample tableExample = new TableExample();
+            tableExample.generateRightTable();
 
         }
     }

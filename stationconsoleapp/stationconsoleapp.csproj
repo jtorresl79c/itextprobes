@@ -124,6 +124,7 @@
     <Compile Include="OrdenInspeccion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RectangleExample.cs" />
     <Compile Include="TableExample.cs" />
   </ItemGroup>
   <ItemGroup>

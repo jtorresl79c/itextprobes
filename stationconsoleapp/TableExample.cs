@@ -9,6 +9,7 @@ using iText;
 using iText.Commons.Utils;
 using iText.IO.Font.Constants;
 using iText.IO.Image;
+using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -17,6 +18,8 @@ using iText.Kernel.Pdf.Extgstate;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+
+using iText.Layout.Borders;
 
 
 namespace stationconsoleapp
@@ -177,6 +180,108 @@ namespace stationconsoleapp
             document.Add(table);
             //Close document
             document.Close();
+        }
+
+        public void generateRightTable()
+        {
+            char SEPARATOR = System.IO.Path.DirectorySeparatorChar;
+            string filepath = Environment.CurrentDirectory;
+            string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]);
+            string dest = routePath + System.IO.Path.DirectorySeparatorChar + "iTextGeneratedFiles" + System.IO.Path.DirectorySeparatorChar + System.IO.Path.GetRandomFileName() + ".pdf";
+
+
+            var writer = new PdfWriter(dest); // La funcion que crea literalmente el archivo en disco, sus parametros puede ser un string como aqui, o un obj de tipo http.response
+            var pdf = new PdfDocument(writer); // Esto es lo que maneja el contenido que creamos, pero en un lenguaje de pdf creo, 
+            PageSize pageSize = PageSize.LETTER;
+            var document = new Document(pdf, pageSize); // Para que no tengamos que meternos en la sintaxis de pdf, creo que esto la hace de traductor, para que podamos escribir en C#
+            document.SetMargins(20, 20, 20, 20);
+
+            float[] tableColumns = new float[] { 1, 2 };
+            Table table = new Table(UnitValue.CreatePercentArray(tableColumns))
+                              .UseAllAvailableWidth();
+            PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+            table.SetWidth(180);
+
+            table.SetTextAlignment(TextAlignment.LEFT);
+
+            table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT);
+
+            Cell cell;
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Dependencia").SetFontSize(6).SetFont(boldFont));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Secretaria de Gobierno").SetFontSize(6));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+
+
+
+
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Sección").SetFontSize(6).SetFont(boldFont));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Dirección de Protección Civil").SetFontSize(6));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+
+
+
+
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Número de Oficio").SetFontSize(6).SetFont(boldFont));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.Add(new Paragraph("DPC/0346/2022.").SetFontSize(6));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+
+
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Expediente").SetFontSize(6).SetFont(boldFont));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Departamento de Verificaciones").SetFontSize(6));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+
+
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Asunto").SetFontSize(6).SetFont(boldFont));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+            cell = new Cell();
+            cell.Add(new Paragraph("Evaluación de Simulacro").SetFontSize(6));
+            cell.SetBorder(Border.NO_BORDER);
+            table.AddCell(cell);
+
+
+            // Al final solo agregamos la tabla al documento como si fuera un simple parrafo o imagen.
+            document.Add(table);
+            //Close document
+            document.Close();
+
+
         }
     }
 }
