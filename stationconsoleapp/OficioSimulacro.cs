@@ -246,6 +246,35 @@ namespace stationconsoleapp
             return paragraph;
         }
 
+        public void GetRevisoCanvas(PdfDocument page)
+        {
+            var ps = PageSize.LETTER;
+
+
+            var canvas = new PdfCanvas(page, 1);
+
+
+            Rectangle rect = new Rectangle(ps.GetWidth() - 180, 80, 130, 80);
+
+            Paragraph p = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(6);
+            PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+
+            Canvas x = new Canvas(canvas, rect);
+            p.Add(new Text("REVISÓ").SetFont(boldFont));
+            p.Add(new Text("\n"));
+            p.Add(new Text("\n"));
+            p.Add(new Text("\n"));
+            p.Add(new Text("\n"));
+            p.Add(new Text("JUAN MANUEL SANDOVAL RODRIGUEZ").SetFont(boldFont));
+            p.Add(new Text("\n"));
+            p.Add(new Text("Verificador Inspector de Protección Civil"));
+            p.Add(new Text("\n"));
+            p.Add(new Text("Departamento de Verificaciones"));
+
+            x.Add(p);
+        }
+
         public void generateFile()
         {
             char SEPARATOR = System.IO.Path.DirectorySeparatorChar;
@@ -285,6 +314,7 @@ namespace stationconsoleapp
             document.Add(GetBodyLegend());
             document.Add(GetBodyAtentamente());
             document.Add(GetBodySigns());
+            GetRevisoCanvas(pdf);
 
 
 
