@@ -192,6 +192,7 @@ namespace stationconsoleapp
         {
             PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
             PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+            PdfFont obliqueFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLDOBLIQUE);
 
             Paragraph paragraph = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.JUSTIFIED).SetFont(font).SetFontSize(10).SetMarginBottom(15f);
             paragraph.Add(new Tab());
@@ -202,7 +203,7 @@ namespace stationconsoleapp
             paragraph.Add("ocurrió de manera satisfactoria, en tiempo y forma, tanto el personal como los usuarios participaron de manera eficiente. De igual forma, se le informa que ");
             paragraph.Add(new Text("deberá mantener vigente anualmente su Programa Interno de Protección Civil (PIPC) ").SetFont(boldFont));
             paragraph.Add("actualizándolo, dándole difusión y seguimiento interno. ");
-            paragraph.Add(new Text("Se le informa que, debido a nuevas normas y políticas internas de esta Dirección, solamente podremos participar en simulacros agendados en días y horas laborales (lunes a viernes de 8a.m. a 5p.m.).").SetFont(boldFont));
+            paragraph.Add(new Text("Se le informa que, debido a nuevas normas y políticas internas de esta Dirección, solamente podremos participar en simulacros agendados en días y horas laborales (lunes a viernes de 8a.m. a 5p.m.).").SetFont(obliqueFont));
 
             return paragraph;
         }
@@ -305,25 +306,9 @@ namespace stationconsoleapp
             //canvas.Stroke();
         }
 
-        public void generateFile()
+        public void SetBackgroundImg(PdfDocument pdf, string routePath)
         {
-            char SEPARATOR = System.IO.Path.DirectorySeparatorChar;
-            string filepath = Environment.CurrentDirectory;
-            string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]);
-            string dest = routePath + System.IO.Path.DirectorySeparatorChar + "iTextGeneratedFiles" + System.IO.Path.DirectorySeparatorChar + System.IO.Path.GetRandomFileName() + ".pdf";
-
-            var writer = new PdfWriter(dest); // La funcion que crea literalmente el archivo en disco, sus parametros puede ser un string como aqui, o un obj de tipo http.response
-            var pdf = new PdfDocument(writer); // Esto es lo que maneja el contenido que creamos, pero en un lenguaje de pdf creo, 
             PageSize pageSize = PageSize.LETTER;
-            var document = new Document(pdf, pageSize); // Para que no tengamos que meternos en la sintaxis de pdf, creo que esto la hace de traductor, para que podamos escribir en C#
-
-            float marginDocument = 65f;
-            //document.SetMargins(0, marginDocument, marginDocument, 0);
-            document.SetLeftMargin(marginDocument);
-            document.SetRightMargin(marginDocument);
-            document.SetTopMargin(55f);
-
-
             // Esto agrega la imagen de fondo
             string IMAGE = routePath + System.IO.Path.DirectorySeparatorChar + "resources" + System.IO.Path.DirectorySeparatorChar + "SimulacroOficio.jpg";
             ImageData image = ImageDataFactory.Create(IMAGE);
@@ -334,7 +319,33 @@ namespace stationconsoleapp
             Rectangle rect = new Rectangle(0, 0, pageSize.GetWidth(), pageSize.GetHeight());
             canvas.AddImageFittedIntoRectangle(image, rect, false);
             canvas.RestoreState();
+        }
 
+        public Document SetMargins(Document document)
+        {
+            float marginDocument = 65f;
+            //document.SetMargins(0, marginDocument, marginDocument, 0);
+            document.SetLeftMargin(marginDocument);
+            document.SetRightMargin(marginDocument);
+            document.SetTopMargin(55f);
+            return document;
+        }
+
+        public void generateFile()
+        {
+            char SEPARATOR = System.IO.Path.DirectorySeparatorChar;
+            string filepath = Environment.CurrentDirectory;
+            string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]);
+            string dest = routePath + System.IO.Path.DirectorySeparatorChar + "iTextGeneratedFiles" + System.IO.Path.DirectorySeparatorChar + System.IO.Path.GetRandomFileName() + ".pdf";
+
+            PdfWriter writer = new PdfWriter(dest); // La funcion que crea literalmente el archivo en disco, sus parametros puede ser un string como aqui, o un obj de tipo http.response
+            PdfDocument pdf = new PdfDocument(writer); // Esto es lo que maneja el contenido que creamos, pero en un lenguaje de pdf creo, 
+            PageSize pageSize = PageSize.LETTER;
+            Document document = new Document(pdf, pageSize); // Para que no tengamos que meternos en la sintaxis de pdf, creo que esto la hace de traductor, para que podamos escribir en C#
+
+            document = SetMargins(document);
+
+            SetBackgroundImg(pdf, routePath);
 
             document.Add(GetTable());
             document.Add(GetFechaAndPlace(DateTime.Now));
@@ -344,13 +355,12 @@ namespace stationconsoleapp
             document.Add(GetBodyLegend());
             document.Add(GetBodyAtentamente());
             document.Add(GetBodySigns());
+
             SetRevisoCanvas(pdf);
+
             SetCCPCanvas(pdf);
 
             document.Close();
-
-
-
         }
 
 
