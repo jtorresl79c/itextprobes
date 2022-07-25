@@ -17,6 +17,7 @@ using iText.Kernel.Font;
 using iText.Layout.Properties;
 
 using iText.Layout.Borders;
+using iText.Kernel.Pdf.Canvas.Draw;
 
 namespace stationconsoleapp
 {
@@ -51,9 +52,6 @@ namespace stationconsoleapp
             cell.Add(new Paragraph("Secretaria de Gobierno").SetFontSize(6));
             cell.SetBorder(Border.NO_BORDER);
             table.AddCell(cell);
-
-
-
 
 
 
@@ -168,7 +166,8 @@ namespace stationconsoleapp
             PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
             Paragraph paragraph = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.JUSTIFIED).SetFont(font).SetFontSize(10);
-            paragraph.Add("\u00a0" + "Por medio del presente tengo a bien dirigirme a Usted para informarle las observaciones y recomendaciones del simulacro que se nos solicitó, según su oficio recibido en esta Dirección el día ");
+            paragraph.Add(new Tab());
+            paragraph.Add("Por medio del presente tengo a bien dirigirme a Usted para informarle las observaciones y recomendaciones del simulacro que se nos solicitó, según su oficio recibido en esta Dirección el día ");
             paragraph.Add(new Text("viernes 28 de enero del 2022").SetFont(boldFont)); // Variable
             paragraph.Add(", junto con su recibo de pago con folio ");
             paragraph.Add(new Text("#202201100000241").SetFont(boldFont)); // Variable
@@ -195,7 +194,8 @@ namespace stationconsoleapp
             PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
             Paragraph paragraph = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.JUSTIFIED).SetFont(font).SetFontSize(10).SetMarginBottom(15f);
-            paragraph.Add("\u00a0" + "Siendo el día ");
+            paragraph.Add(new Tab());
+            paragraph.Add("Siendo el día ");
             paragraph.Add(new Text("miércoles 16 de febrero del 2022" + ", ").SetFont(boldFont)); // Variable
             paragraph.Add("personal técnico adscrito a esta Dirección, acudió al lugar antes mencionado, donde se observó que el ");
             paragraph.Add(new Text("simulacro de gabinete ").SetFont(boldFont));
@@ -246,25 +246,29 @@ namespace stationconsoleapp
             return paragraph;
         }
 
-        public void GetRevisoCanvas(PdfDocument page)
+        public void SetRevisoCanvas(PdfDocument page)
         {
             var ps = PageSize.LETTER;
-
-
             var canvas = new PdfCanvas(page, 1);
-
-
             Rectangle rect = new Rectangle(ps.GetWidth() - 180, 80, 130, 80);
+            Canvas rectangleContainer = new Canvas(canvas, rect);
+            
 
-            Paragraph p = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(6);
+            SolidLine line = new SolidLine(1f);
+            line.SetColor(iText.Kernel.Colors.ColorConstants.BLACK);
+            LineSeparator ls = new LineSeparator(line);
+            var LineSeparatorWidth = rect.GetWidth();
+            ls.SetWidth(LineSeparatorWidth);
+
+
             PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-
-
-            Canvas x = new Canvas(canvas, rect);
+            Paragraph p = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(6);
             p.Add(new Text("REVISÓ").SetFont(boldFont));
             p.Add(new Text("\n"));
             p.Add(new Text("\n"));
             p.Add(new Text("\n"));
+            p.Add(new Text("\n"));
+            p.Add(ls);
             p.Add(new Text("\n"));
             p.Add(new Text("JUAN MANUEL SANDOVAL RODRIGUEZ").SetFont(boldFont));
             p.Add(new Text("\n"));
@@ -272,7 +276,33 @@ namespace stationconsoleapp
             p.Add(new Text("\n"));
             p.Add(new Text("Departamento de Verificaciones"));
 
-            x.Add(p);
+            rectangleContainer.Add(p);
+
+            // Si quitas esto sigue funcionando, PERO si se quiere activar el canvas.Stroke() es necesario
+            // el canvas.Rectangle(rect)
+            //canvas.Rectangle(rect);
+            //canvas.Stroke();
+        }
+
+        public void SetCCPCanvas(PdfDocument page)
+        {
+            var ps = PageSize.LETTER;
+            var canvas = new PdfCanvas(page, 1);
+            Rectangle rect = new Rectangle(65, 30, 130, 80);
+            Canvas rectangleContainer = new Canvas(canvas, rect);
+
+            PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+            Paragraph p = new Paragraph().SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(6);
+            p.Add("C.c.p.-Archivo 2022.");
+            p.Add(new Text("\n"));
+            p.Add("BVR/SAPI/SMVS");
+
+            rectangleContainer.Add(p);
+
+            // Si quitas esto sigue funcionando, PERO si se quiere activar el canvas.Stroke() es necesario
+            // el canvas.Rectangle(rect)
+            //canvas.Rectangle(rect);
+            //canvas.Stroke();
         }
 
         public void generateFile()
@@ -314,12 +344,8 @@ namespace stationconsoleapp
             document.Add(GetBodyLegend());
             document.Add(GetBodyAtentamente());
             document.Add(GetBodySigns());
-            GetRevisoCanvas(pdf);
-
-
-
-
-
+            SetRevisoCanvas(pdf);
+            SetCCPCanvas(pdf);
 
             document.Close();
 
