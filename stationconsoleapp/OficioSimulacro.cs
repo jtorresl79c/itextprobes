@@ -109,13 +109,8 @@ namespace stationconsoleapp
             return table;
         }
 
-        public Paragraph GetFechaAndPlace(DateTime datetime)
+        public string DateToTextDate(DateTime datetime) // 25 de julio de 2022
         {
-
-            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
-            PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-
-            //DateTime datetime = datetime;
             int day = datetime.Day; // 1, 2, 3, 4
 
             int year = datetime.Year;
@@ -124,14 +119,62 @@ namespace stationconsoleapp
             var culture = new System.Globalization.CultureInfo("es-ES");
             string MonthInSpanish = culture.DateTimeFormat.GetMonthName(month); // enero, febrero, marzo, abril, mayo, junio
 
+            //DayOfWeek dayOfWeek = datetime.DayOfWeek; // Dia de la semana en ingles: Monday, Sunday, Tuesday, etc
+            //string dayOfWeekInSpanish = culture.DateTimeFormat.GetDayName(dayOfWeek).ToString(); //  Si sirve, pero lo comente porque no se esta usando
+
+            string Fecha = $"{day} de {MonthInSpanish} de {year}.";
+
+            return Fecha;
+        }
+
+        public string GetDayInTextOfDatetime(DateTime datetime) // lunes, martes, miercoles
+        {
+            var culture = new System.Globalization.CultureInfo("es-ES");
+            DayOfWeek dayOfWeek = datetime.DayOfWeek; // Dia de la semana en ingles: Monday, Sunday, Tuesday, etc
+            string dayOfWeekInSpanish = culture.DateTimeFormat.GetDayName(dayOfWeek).ToString(); // lunes, martes, miercoles
+            return dayOfWeekInSpanish;
+        }
+
+        public string DateToFullDateInText(DateTime datetime)
+        {
+            int day = datetime.Day; // 1, 2, 3, 4
+
+            int year = datetime.Year;
+
+            int month = datetime.Month; // january, febraury, june, etc
+            var culture = new System.Globalization.CultureInfo("es-ES");
+            string MonthInSpanish = culture.DateTimeFormat.GetMonthName(month); // enero, febrero, marzo, abril, mayo, junio
 
             DayOfWeek dayOfWeek = datetime.DayOfWeek; // Dia de la semana en ingles: Monday, Sunday, Tuesday, etc
             string dayOfWeekInSpanish = culture.DateTimeFormat.GetDayName(dayOfWeek).ToString(); //  Si sirve, pero lo comente porque no se esta usando
 
+            string Fecha = $"{dayOfWeekInSpanish} {day} de {MonthInSpanish} de {year}.";
 
-            string Fecha = $"{day} de {MonthInSpanish} de {year}.";
+            return Fecha;
+        }
 
-            string fulltext = $"Tijuana, Baja California, {dayOfWeekInSpanish}, {Fecha}";
+        public Paragraph GetFechaAndPlace(DateTime datetime)
+        {
+
+            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+            ////DateTime datetime = datetime;
+            //int day = datetime.Day; // 1, 2, 3, 4
+
+            //int year = datetime.Year;
+
+            //int month = datetime.Month; // january, febraury, june, etc
+            //var culture = new System.Globalization.CultureInfo("es-ES");
+            //string MonthInSpanish = culture.DateTimeFormat.GetMonthName(month); // enero, febrero, marzo, abril, mayo, junio
+
+            //DayOfWeek dayOfWeek = datetime.DayOfWeek; // Dia de la semana en ingles: Monday, Sunday, Tuesday, etc
+            //string dayOfWeekInSpanish = culture.DateTimeFormat.GetDayName(dayOfWeek).ToString(); //  Si sirve, pero lo comente porque no se esta usando
+
+            //string Fecha = $"{day} de {MonthInSpanish} de {year}.";
+
+            //string fulltext = $"Tijuana, Baja California, {GetDayInTextOfDatetime(datetime)}, {DateToTextDate(datetime)}";
+            string fulltext = $"Tijuana, Baja California, {DateToFullDateInText(datetime)}";
 
             return new Paragraph(fulltext).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(10).SetFont(font);
 
@@ -172,8 +215,8 @@ namespace stationconsoleapp
             paragraph.Add(", junto con su recibo de pago con folio ");
             paragraph.Add(new Text("#202201100000241").SetFont(boldFont)); // Variable
             paragraph.Add(", para presenciar el día ");
-            paragraph.Add("miércoles 16 de febrero del 2022"); // Variable
-            paragraph.Add(" a las");
+            paragraph.Add("miércoles 16 de febrero del 2022 "); // Variable
+            paragraph.Add("a las ");
             paragraph.Add(new Text("11:00 hrs.").SetFont(boldFont)); // WWWWVariable
             paragraph.Add(" en las instalaciones de la empresa ");
             paragraph.Add(new Text("ACCENTECH S.A DE C.V").SetFont(boldFont)); // Variable
