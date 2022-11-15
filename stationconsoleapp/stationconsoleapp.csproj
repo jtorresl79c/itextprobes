@@ -36,6 +36,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="Humanizer, Version=2.14.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.14.1\lib\netstandard2.0\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="itext.barcodes, Version=7.2.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext7.7.2.2\lib\net461\itext.barcodes.dll</HintPath>
     </Reference>
@@ -95,6 +98,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -119,8 +123,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundEventHandler.cs" />
     <Compile Include="CanvasExample.cs" />
+    <Compile Include="GridExample.cs" />
     <Compile Include="ImageExample.cs" />
+    <Compile Include="ActaCircunstanciada.cs" />
+    <Compile Include="NumberPage.cs" />
     <Compile Include="OficioSimulacro.cs" />
     <Compile Include="OrdenInspeccion.cs" />
     <Compile Include="Program.cs" />
@@ -138,6 +146,7 @@
     <Folder Include="iTextGeneratedFiles\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\ActaCircBg.jpg" />
     <Content Include="resources\backgroundPC5.jpg" />
     <Content Include="resources\dog.bmp" />
     <Content Include="resources\fox.bmp" />
