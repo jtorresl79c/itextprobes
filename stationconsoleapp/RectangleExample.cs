@@ -64,7 +64,7 @@ namespace stationconsoleapp
             //x.Add(new Paragraph("REVISO2"));
 
             canvas.Rectangle(rect);
-            //canvas.Stroke();
+            canvas.Stroke();
 
             pdf.Close();
 
