@@ -46,7 +46,7 @@ namespace stationconsoleapp
 
             table.SetTextAlignment(TextAlignment.CENTER);
 
-            //table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+            table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
             //table.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.BOTTOM);
 
             Cell cell;
