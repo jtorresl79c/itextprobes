@@ -75,6 +75,7 @@ namespace stationconsoleapp
 
         public Paragraph GetBodyFirstPage(
             PdfFont boldFont,
+            Document document,
             string HoraInicio = "",
             string HoraFinal = "",
             string FechaFinal = "",
@@ -136,17 +137,36 @@ namespace stationconsoleapp
                 $"la visita de inspección, en términos del artículo 102 del "
             );
 
-            p.Add(new Text("REGLAMENTO DE PROTECCIÓN CIVIL DEL MUNICIPIO DE TIJUANA").SetFont(boldFont));
+            p.Add(new Text("REGLAMENTO DE PROTECCIÓN CIVIL DEL MUNICIPIO DE TIJUANA ").SetFont(boldFont));
 
-            p.Add(" ---------------------------------------------------------------------------------------------");
+            //p.Add("----------------------------------------");
+            p.Add(new Tab());
+            ILineDrawer filling = new DashedLine();
+            PageSize pageSize1 = document.GetPdfDocument().GetDefaultPageSize();
+            Rectangle effectivePageSize = document.GetPageEffectiveArea(pageSize1);
+            float rightTabStopPoint = effectivePageSize.GetWidth();
+            TabStop tabStop = new TabStop(rightTabStopPoint, TabAlignment.LEFT, filling);
+            p.AddTabStops(tabStop);
 
             p.Add(new Text("\n"));
 
             p.Add(
                 $"Así mismo, en este acto quienes intervienen en la instrumentación del acta son sabedores de las penas en que incurren los falsos declarantes en términos del artículo 320 del Código Penal para el " +
                 $"Estado de Baja California, por lo que se les exhorta a conducirse con verdad en el desarrollo de la presente diligencia. A continuación, siendo las {HoraFinal} " + 
-                $"se termina la inspección de campo y documental misma de la que se desprende lo siguiente: {ActaObservaciones}"
+                $"se termina la inspección de campo y documental misma de la que se desprende lo siguiente: "
             );
+
+            p.Add(new Tab());
+            filling = new DashedLine();
+            pageSize1 = document.GetPdfDocument().GetDefaultPageSize();
+            effectivePageSize = document.GetPageEffectiveArea(pageSize1);
+            rightTabStopPoint = effectivePageSize.GetWidth();
+            tabStop = new TabStop(rightTabStopPoint, TabAlignment.LEFT, filling);
+            p.AddTabStops(tabStop);
+
+            p.Add("\n");
+
+            p.Add(ActaObservaciones);
 
             //p.SetPaddingLeft(30);
             //p.SetPaddingRight(30);
@@ -154,7 +174,7 @@ namespace stationconsoleapp
             return p;
         }
 
-        public Paragraph GetBodySecondPage(PdfFont BOLDFONT, 
+        public Paragraph GetBodySecondPage(PdfFont BOLDFONT, Document document,
             string ActaEntrevistadoNombre,
             string ActaEntrevistadoObservaciones,
             string HoraFinal,
@@ -180,7 +200,15 @@ namespace stationconsoleapp
 
             p.Add(new Text("entregando copia ").SetFont(BOLDFONT));
 
-            p.Add($"de la misma a la persona que atiende la inspección siendo las {HoraFinal} horas del día {FechaFinal} firmando al calce quienes intervinieron en ella, para los efectos legales correspondientes.---------------------------------------");
+            p.Add($"de la misma a la persona que atiende la inspección siendo las {HoraFinal} horas del día {FechaFinal} firmando al calce quienes intervinieron en ella, para los efectos legales correspondientes. ");
+
+            p.Add(new Tab());
+            ILineDrawer filling = new DashedLine();
+            PageSize pageSize1 = document.GetPdfDocument().GetDefaultPageSize();
+            Rectangle effectivePageSize = document.GetPageEffectiveArea(pageSize1);
+            float rightTabStopPoint = effectivePageSize.GetWidth();
+            TabStop tabStop = new TabStop(rightTabStopPoint, TabAlignment.LEFT, filling);
+            p.AddTabStops(tabStop);
 
             return p;
         }
@@ -196,7 +224,12 @@ namespace stationconsoleapp
             return p;
         }
 
-        public Table GetSignsTable(PageSize pageSize)
+        public Table GetSignsTable(PageSize pageSize,
+            string OrdenVerificador,
+            string ActaEntrevistadoNombre,
+            string ActaTestigo1Nombre,
+            string ActaTestigo2Nombre
+        )
         {
             float paddingCell = 0;
 
@@ -236,6 +269,8 @@ namespace stationconsoleapp
             p.Add(ls);
             p.Add(new Text("\n"));
             p.Add(new Text("VERIFICADOR").SetFont(boldFont)).SetFontSize(11);
+            p.Add(new Text("\n"));
+            p.Add(OrdenVerificador);
             //p.Add(new Text("\n"));
             //p.Add(new Text("Verificador Inspector de Protección Civil"));
             //p.Add(new Text("\n"));
@@ -259,6 +294,8 @@ namespace stationconsoleapp
             p.Add(ls);
             p.Add(new Text("\n"));
             p.Add(new Text("PERSONA QUE ATIENDE LA INSPECCIÓN").SetFont(boldFont));
+            p.Add(new Text("\n"));
+            p.Add(ActaEntrevistadoNombre);
 
             cell = new Cell();
             cell.Add(p);
@@ -279,6 +316,8 @@ namespace stationconsoleapp
             p.Add(ls);
             p.Add(new Text("\n"));
             p.Add(new Text("TESTIGO").SetFont(boldFont));
+            p.Add(new Text("\n"));
+            p.Add(ActaTestigo1Nombre);
             p.Add(new Text("\n"));
             p.Add(new Text("NOMBRE Y FIRMA"));
             //p.Add(new Text("\n"));
@@ -302,6 +341,8 @@ namespace stationconsoleapp
             p.Add(new Text("\n"));
             p.Add(new Text("TESTIGO").SetFont(boldFont));
             p.Add(new Text("\n"));
+            p.Add(ActaTestigo2Nombre);
+            p.Add(new Text("\n"));
             p.Add(new Text("NOMBRE Y FIRMA"));
 
             cell = new Cell();
@@ -316,19 +357,39 @@ namespace stationconsoleapp
 
         public void SetNumberPages(Document document)
         {
+            PdfPage page;
+            Rectangle pageSize;
+
             int numberOfPages = document.GetPdfDocument().GetNumberOfPages();
             PdfDocument pdfDocument = document.GetPdfDocument();
+            Paragraph paragraph;
+            IRenderer paragraphRenderer;
+            LayoutResult result;
+            float paragraphTotalWidth;
+
+            float pageX;
+            float pageY;
             for (int i = 1; i <= numberOfPages; i++)
             {
-                PdfPage page = pdfDocument.GetPage(i);
-                Rectangle pageSize = page.GetPageSize(); // Esto retorna null en la primera pagina si no se hace esto https://stackoverflow.com/questions/58691825/pdfdocument-getpagesize-not-set-to-an-instance-of-object-itext7
-                float pageX = pageSize.GetRight() - document.GetRightMargin() - 40;
-                float pageY = pageSize.GetBottom() + 30;
+
+                page = pdfDocument.GetPage(i);
+                pageSize = page.GetPageSize(); // Esto retorna null en la primera pagina si no se hace esto https://stackoverflow.com/questions/58691825/pdfdocument-getpagesize-not-set-to-an-instance-of-object-itext7
+
+                //https://stackoverflow.com/questions/61911094/itext7-how-to-get-the-real-width-of-a-paragraph
+                paragraph = new Paragraph(String.Format("{0}/{1}", i, numberOfPages));
+                paragraphRenderer = paragraph.CreateRendererSubTree();
+                result = paragraphRenderer.SetParent(document.GetRenderer()).Layout(new LayoutContext(new LayoutArea(1, new Rectangle(1000, 100))));
+                paragraphTotalWidth = ((ParagraphRenderer)paragraphRenderer).GetMinMaxWidth().GetMaxWidth();
+                //Console.WriteLine(paragraphTotalWidth);
+
+
+
+                pageX = pageSize.GetRight() - document.GetRightMargin() - paragraphTotalWidth;
+                pageY = pageSize.GetBottom() + 30;
                 //float pageY = document.GetBottomMargin();
 
                 // Write x of y to the right bottom
-                Paragraph p = new Paragraph(String.Format("{0}/{1}", i, numberOfPages));
-                document.ShowTextAligned(p, pageX, pageY, i, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
+                document.ShowTextAligned(paragraph, pageX, pageY, i, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
 
                 ////write name to the left
                 //pageX = pageSize.GetLeft() + document.GetLeftMargin();
@@ -384,15 +445,15 @@ namespace stationconsoleapp
 
             var ac = new
             {
-                Folio = "1000",
+                Folio = "1000", // Folio del Acta Circunstanciada (ya se captura)
                 HoraInicio = "14:25",
                 HoraFinal = "16:00",
                 FechaFinal = "25 de Noviembre de 2022",
                 FechaCreacion = "02/09/22",
-                OrdenVerificador = "ALFREDO ORTEGA SOTELO DE LA MADRID DE LOS ALTOS MONTES",
+                OrdenVerificador = "ALFREDO ORTEGA SOTELO",
                 OrdenDomicilio = "CALLE IMAGINARIA 232",
                 OrdenEmpresa = "EMPRESA AERONAUTICA SA DE CV",
-                OrdenGiro = "EMPRESA DE AVIONES",
+                OrdenGiro = "EMPRESA DE AVIONES SA DE CV PRUEBA",
                 OrdenFechaCreacion = "10/05/22",
                 OrdenFolio = "A57SDW6SDWE",
                 InspectorNumCredencial = "532146", // acta.num_cred
@@ -415,7 +476,7 @@ namespace stationconsoleapp
                 ActaTestigo2DocumentoIdentidad = "PASAPORTE",
                 ActaTestigo2DocumentoIdentidadNumId = "45354DDSS",
                 ActaTestigo2Puesto = "JEFE",
-                ActaObservaciones = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula aliquet justo, a ornare diam. Morbi laoreet sit amet quam ac fermentum. Aliquam sollicitudin et nisl et aliquet. Etiam neque quam, viverra in mattis vel, rutrum sed risus. Vivamus tristique diam leo, eu sagittis ligula venenatis ac. Aliquam ultrices porttitor fermentum. Cras ut tortor semper, tempus turpis eu, fringilla orci. Donec quis urna at tortor auctor cursus ut non risus. Duis laoreet metus eu purus sodales auctor. Nam iaculis, tellus non ultrices vehicula, risus sem dictum dolor, eleifend sollicitudin augue diam eu augue. Nulla commodo porttitor tellus sed porta. In sodales dui vestibulum nibh mattis, nec varius felis pretium. Vivamus non odio id dolor iaculis ullamcorper. Proin fermentum porttitor leo, et viverra elit scelerisque eget.  Vestibulum maximus eleifend pharetra. Quisque sed congue libero. Aenean feugiat finibus ligula in lobortis. Phasellus pretium pretium nunc, et ullamcorper ante bibendum sit amet. Quisque vel velit id purus varius elementum eget vel nulla. Aliquam placerat, massa id aliquam lacinia, turpis turpis condimentum sapien, non aliquam odio lectus id neque. Donec vehicula, enim ut sodales molestie, lectus tellus pulvinar arcu, id consectetur quam lorem vitae sapien. Maecenas lacinia convallis lacus, nec blandit nulla. Suspendisse potenti. Aenean et lectus lobortis, ornare mi eu, porta nisl. Phasellus orci neque, rhoncus et neque sed, accumsan fermentum urna. Cras semper massa quis mi rutrum congue."
+                ActaObservaciones = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula aliquet justo, a ornare diam. Morbi laoreet sit amet quam ac fermentum. Aliquam sollicitudin et nisl et aliquet. Etiam neque quam, viverra in mattis vel, rutrum sed risus. Vivamus tristique diam leo, eu sagittis ligula venenatis ac. Aliquam ultrices porttitor fermentum. Cras ut tortor semper, tempus turpis eu, fringilla orci. Donec quis urna at tortor auctor cursus ut non risus. Duis laoreet metus eu purus sodales auctor. Nam iaculis, tellus non ultrices vehicula, risus sem dictum dolor, eleifend sollicitudin augue diam eu augue. Nulla commodo porttitor tellus sed porta. In sodales dui vestibulum nibh mattis, nec varius felis pretium. Vivamus non odio id dolor iaculis ullamcorper. Proin fermentum porttitor leo, et viverra elit scelerisque eget.  Vestibulum maximus eleifend pharetra. Quisque sed congue libero. Aenean feugiat finibus ligula in lobortis. Phasellus pretium pretium nunc, et ullamcorper ante bibendum sit amet. Quisque vel velit id purus varius elementum eget vel nulla. Aliquam placerat, massa id aliquam lacinia, turpis turpis condimentum sapien, non aliquam odio lectus id neque. Donec vehicula, enim ut sodales molestie, lectus tellus pulvinar arcu, id consectetur quam lorem vitae sapien. Maecenas lacinia convallis lacus, nec blandit nulla. Suspendisse potenti. Aenean et lectus lobortis, ornare mi eu, porta nisl. Phasellus orci neque, rhoncus et neque sed, accumsan fermentum urna. Cras semper massa quis mi rutrum congue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula aliquet justo, a ornare diam. Morbi laoreet sit amet quam ac fermentum. Aliquam sollicitudin et nisl et aliquet. Etiam neque quam, viverra in mattis vel, rutrum sed risus. Vivamus tristique diam leo, eu sagittis ligula venenatis ac. Aliquam ultrices porttitor fermentum. Cras ut tortor semper, tempus turpis eu, fringilla orci. Donec quis urna at tortor auctor cursus ut non risus. Duis laoreet metus eu purus sodales auctor. Nam iaculis, tellus non ultrices."
             };
 
             Console.WriteLine(ac.ActaObservaciones.Length.ToString());
@@ -424,6 +485,7 @@ namespace stationconsoleapp
             document.Add(GetTituloActaForDocument(BOLDFONT));
             document.Add(GetBodyFirstPage(
                 BOLDFONT,
+                document,
                 ac.HoraInicio,
                 ac.HoraFinal,
                 ac.FechaFinal,
@@ -458,7 +520,7 @@ namespace stationconsoleapp
             ));
 
 
-            if (!(ac.ActaObservaciones.Length >= 2157))
+            if (!(ac.ActaObservaciones.Length >= 2069))
             {
                 document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Salto de pagina
             }
@@ -467,7 +529,7 @@ namespace stationconsoleapp
 
             //document.Add(new Paragraph("\n"));
             //document.Add(GetFolioParagraphForDocument(BOLDFONT, ac.Folio));
-            document.Add(GetBodySecondPage(BOLDFONT, ac.ActaEntrevistadoNombre, ac.ActaEntrevistadoObservaciones,ac.HoraFinal, ac.FechaFinal));
+            document.Add(GetBodySecondPage(BOLDFONT, document,ac.ActaEntrevistadoNombre, ac.ActaEntrevistadoObservaciones,ac.HoraFinal, ac.FechaFinal));
             document.Add(GetBodyLegend());
             //document.Add(GetBodyLegend());
             //document.Add(GetBodyLegend());
@@ -479,7 +541,7 @@ namespace stationconsoleapp
             //document.Add(GetBodyLegend());
             //document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Salto de pagina
 
-            Table SignsTable = GetSignsTable(pageSize);
+            Table SignsTable = GetSignsTable(pageSize, ac.OrdenVerificador, ac.ActaEntrevistadoNombre, ac.ActaTestigo1Nombre, ac.ActaTestigo2Nombre);
 
             //https://kb.itextpdf.com/home/it7kb/faq/how-to-add-a-table-to-the-bottom-of-the-last-page
             //using iText.Layout.Renderer;
@@ -494,12 +556,22 @@ namespace stationconsoleapp
             //float totalWidth = ((ParagraphRenderer)paragraphRenderer).GetMinMaxWidth().GetMaxWidth();
             //Console.WriteLine(totalWidth);
 
-
             document.Add(SignsTable);
+
+
+            //Paragraph p = new Paragraph("Hello world").Add(new Tab());
+            //ILineDrawer filling = new DashedLine();
+            //PageSize pageSize1 = document.GetPdfDocument().GetDefaultPageSize();
+            //Rectangle effectivePageSize = document.GetPageEffectiveArea(pageSize1);
+            //float rightTabStopPoint = effectivePageSize.GetWidth();
+            //TabStop tabStop = new TabStop(rightTabStopPoint, TabAlignment.LEFT, filling);
+            //p.AddTabStops(tabStop);
+            //document.Add(p);
+
+
 
             SetNumberPages(document);
             SetFolioInAllPages(document, "DPC/155465448/2022");
-
 
             document.Close();
         }
