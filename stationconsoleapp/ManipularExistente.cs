@@ -41,6 +41,24 @@ namespace stationconsoleapp
 
             PageSize pageSize = PageSize.LETTER;
             Document document = new Document(pdfDoc, pageSize);
+
+
+
+
+            // add content
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
+            IDictionary<String, PdfFormField> fields = form.GetFormFields();
+
+            PdfFormField toSet;
+            fields.TryGetValue("HoraDespacho", out toSet);
+            toSet.SetValue("James Bond");
+
+            fields.TryGetValue("CasillaExample", out toSet);
+            toSet.SetValue("Yes");
+
+
+
+
             //pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundEventHandler(routePath));
 
             document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
