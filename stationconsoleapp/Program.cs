@@ -36,18 +36,15 @@ namespace stationconsoleapp
             //OficioSimulacro oficioSimulacro = new OficioSimulacro();
             //oficioSimulacro.generateFile();
 
-            //ActaCircunstanciada ac = new ActaCircunstanciada();
-            //ac.generateFile();
+            ActaCircunstanciada ac = new ActaCircunstanciada();
+            ac.generateFile();
 
 
             //NumberPage np = new NumberPage();
             //np.generateFile();
 
-            GridExample ge = new GridExample();
-            ge.generateFile();
-
-
-
+            //GridExample ge = new GridExample();
+            //ge.generateFile();
 
             //DateTime date = DateTime.Now;
             //var culture = new System.Globalization.CultureInfo("es-ES");
