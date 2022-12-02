@@ -36,8 +36,11 @@ namespace stationconsoleapp
             //OficioSimulacro oficioSimulacro = new OficioSimulacro();
             //oficioSimulacro.generateFile();
 
-            ActaCircunstanciada ac = new ActaCircunstanciada();
-            ac.generateFile();
+            //ActaCircunstanciada ac = new ActaCircunstanciada();
+            //ac.generateFile();
+
+            ManipularExistente me = new ManipularExistente();
+            me.generateFile();
 
 
             //NumberPage np = new NumberPage();

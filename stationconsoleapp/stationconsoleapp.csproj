@@ -128,6 +128,7 @@
     <Compile Include="GridExample.cs" />
     <Compile Include="ImageExample.cs" />
     <Compile Include="ActaCircunstanciada.cs" />
+    <Compile Include="ManipularExistente.cs" />
     <Compile Include="NumberPage.cs" />
     <Compile Include="OficioSimulacro.cs" />
     <Compile Include="OrdenInspeccion.cs" />
