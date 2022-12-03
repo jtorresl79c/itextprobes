@@ -46,24 +46,29 @@ namespace stationconsoleapp
 
 
             // add content
-            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
-            IDictionary<String, PdfFormField> fields = form.GetFormFields();
+            //PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
+            //IDictionary<String, PdfFormField> fields = form.GetFormFields();
 
-            PdfFormField toSet;
-            fields.TryGetValue("HoraDespacho", out toSet);
-            toSet.SetValue("James Bond");
+            //PdfFormField toSet;
+            //fields.TryGetValue("HoraDespacho", out toSet);
+            //toSet.SetValue("James Bond");
 
-            fields.TryGetValue("CasillaExample", out toSet);
-            toSet.SetValue("Yes");
-
-
+            //fields.TryGetValue("CasillaExample", out toSet);
+            //toSet.SetValue("Yes");
 
 
-            //pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundEventHandler(routePath));
+
+
+            pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundReporteEmergenciaEventHandler(routePath));
+
+
+            document.SetTopMargin(100f);
 
             document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
             document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
             document.Add(new Paragraph("Folio: "));
+
+
 
             iText.Layout.Element.Image fox = new Image(ImageDataFactory.Create(FOX));
             iText.Layout.Element.Image dog = new iText.Layout.Element.Image(ImageDataFactory.Create(DOG));
