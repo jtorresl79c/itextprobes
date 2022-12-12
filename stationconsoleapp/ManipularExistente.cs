@@ -19,6 +19,8 @@ using iText.IO.Source;
 using iText.Kernel.Events;
 using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Extgstate;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
 
 namespace stationconsoleapp
 {
@@ -30,9 +32,6 @@ namespace stationconsoleapp
             char SEPARATOR = System.IO.Path.DirectorySeparatorChar;
             string filepath = Environment.CurrentDirectory;
             string routePath = (filepath.Split(new String[] { "bin" }, StringSplitOptions.None)[0]) + SEPARATOR;
-
-            string DOG = routePath + "resources" + SEPARATOR + "dog.bmp";
-            string FOX = routePath + "resources" + SEPARATOR + "fox.bmp";
 
             string src = routePath + "resources" + SEPARATOR + "formatoemer.pdf";
             string dest = routePath + "iTextGeneratedFiles" + SEPARATOR + System.IO.Path.GetRandomFileName() + ".pdf";
@@ -62,25 +61,77 @@ namespace stationconsoleapp
             pdfDoc.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundReporteEmergenciaEventHandler(routePath));
 
 
-            document.SetTopMargin(100f);
+            document.SetTopMargin(60f);
 
             document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
             document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-            document.Add(new Paragraph("Folio: "));
 
-
-
-            iText.Layout.Element.Image fox = new Image(ImageDataFactory.Create(FOX));
+            string DOG = routePath + "resources" + SEPARATOR + "prueba1negocio.jpeg";
+            string SWAMPER = routePath + "resources" + SEPARATOR + "3.jpg";
             iText.Layout.Element.Image dog = new iText.Layout.Element.Image(ImageDataFactory.Create(DOG));
+            iText.Layout.Element.Image dog2 = new iText.Layout.Element.Image(ImageDataFactory.Create(DOG));
+            iText.Layout.Element.Image swamper = new iText.Layout.Element.Image(ImageDataFactory.Create(SWAMPER));
 
-            Paragraph p = new Paragraph()
-                            .Add("The quick brown ")
-                            .Add(fox)
-                            .Add("jumps over the lazy ")
-                            .Add(dog);
+            dog.SetWidth(255);
+            dog.SetHeight(150);
 
-            document.Add(p);
+            swamper.SetWidth(255);
+            swamper.SetHeight(150);
 
+            dog2.SetWidth(490);
+            dog2.SetHeight(280);
+
+            PdfFont BOLDFONT = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+            Paragraph p1 = new Paragraph("UBICACIÓN (FOTO) CON COORDENADAS").SetFont(BOLDFONT);
+
+            Paragraph p2 = new Paragraph()
+                            .Add("")
+                            .Add(dog2);
+
+            p2.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+            p1.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+            document.Add(p1);
+            document.Add(p2);
+
+            //iText.Layout.Element.Image fox = new Image(ImageDataFactory.Create(FOX));
+            //iText.Layout.Element.Image dog = new iText.Layout.Element.Image(ImageDataFactory.Create(DOG));
+
+            //Paragraph p = new Paragraph()
+            //                .Add("The quick brown ")
+            //                .Add(fox)
+            //                .Add("jumps over the lazy ")
+            //                .Add(dog);
+
+            //document.Add(p);
+
+
+            document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
+            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+            float[] tableColumns = new float[] { 1, 1 };
+            Table table = new Table(UnitValue.CreatePercentArray(tableColumns))
+                              .UseAllAvailableWidth();
+
+            table.AddCell(new Cell().Add(dog));
+            table.AddCell(new Cell().Add(swamper));
+
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 1")));
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 2")));
+
+            table.AddCell(new Cell().Add(dog));
+            table.AddCell(new Cell().Add(swamper));
+
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 3")));
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 4")));
+
+            table.AddCell(new Cell().Add(dog));
+            table.AddCell(new Cell().Add(swamper));
+
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 5")));
+            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 6")));
+
+            document.Add(table);
 
             pdfDoc.Close();
 
