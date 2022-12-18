@@ -26,6 +26,257 @@ namespace stationconsoleapp
 {
     class ReporteEmergencia
     {
+
+        public void Example1(
+            PdfAcroForm form,
+            bool LugarComunidad,
+            bool LugarPropPrivada,
+            bool LugarAreaPublica,
+            bool LugarPredioBaldio,
+            bool LugarCalleAutopista,
+            bool LugaEdificioPublico,
+            bool LugarCasa,
+            bool LugarEscuela,
+            bool LugarIndustria,
+            bool RiesgoIncendio,
+            bool RiesgoDerramesMP,
+            bool RiesgoFugaGas,
+            bool RiesgoExplosiones,
+            bool RiesgoRadioactividad,
+            bool RiesgoAmenazaBomba,
+            bool RiesgoAccidentesAFMT,
+            bool RiesgoAglomeracion,
+            bool RiesgoAfectacionServicios,
+            bool RiesgoVandalismoSabotaje,
+            bool RiesgoDeslizamiento,
+            bool RiesgoDeslave,
+            bool RiesgoDerrumbe,
+            bool RiesgoHundimiento,
+            bool RiesgoSocavon,
+            bool RiesgoInundación,
+            bool RiesgoCondicionSantana,
+            bool RiesgoLluvias,
+            bool RiesgoHeladas,
+            bool RiesgoGranizadas,
+            bool RiesgoEpidemia,
+            bool RiesgoLluviaAcida,
+            bool RiesgoPandemia,
+            bool RiesgoPlagas,
+            bool AccidenteLaboralCaidasAltura,
+            bool AccidenteLaboralAmputacion,
+            bool AccidenteLaboralAtrapamiento,
+            bool AccidenteLaboralErgonomico,
+            bool AccidenteLaboralElectrocutado,
+            bool AccidenteLaboralAtropellamiento,
+            bool AccidenteLaboralCaidaObjetivo,
+            bool AccidenteLaboralLesiones
+        )
+        {
+            IDictionary<String, PdfFormField> fields = form.GetFormFields();
+
+            PdfFormField toSet;
+
+
+            if (LugarComunidad)
+            {
+                fields.TryGetValue("LugarComunidad", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarPropPrivada)
+            {
+                fields.TryGetValue("LugarPropPrivada", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarAreaPublica)
+            {
+                fields.TryGetValue("LugarAreaPublica", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarPredioBaldio)
+            {
+                fields.TryGetValue("LugarPredioBaldio", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarCalleAutopista)
+            {
+                fields.TryGetValue("LugarCalleAutopista", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugaEdificioPublico)
+            {
+                fields.TryGetValue("LugaEdificioPublico", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarCasa)
+            {
+                fields.TryGetValue("LugarCasa", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarEscuela)
+            {
+                fields.TryGetValue("LugarEscuela", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (LugarIndustria)
+            {
+                fields.TryGetValue("LugarIndustria", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+
+            if (RiesgoIncendio)
+            {
+                fields.TryGetValue("RiesgoIncendio", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoDerramesMP)
+            {
+                fields.TryGetValue("RiesgoDerramesMP", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoFugaGas)
+            {
+                fields.TryGetValue("RiesgoFugaGas", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoExplosiones)
+            {
+                fields.TryGetValue("RiesgoExplosiones", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoRadioactividad)
+            {
+                fields.TryGetValue("RiesgoRadioactividad", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoAmenazaBomba)
+            {
+                fields.TryGetValue("RiesgoAmenazaBomba", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoAccidentesAFMT)
+            {
+                fields.TryGetValue("RiesgoAccidentesAFMT", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoAglomeracion)
+            {
+                fields.TryGetValue("RiesgoAglomeracion", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoAfectacionServicios)
+            {
+                fields.TryGetValue("RiesgoAfectacionServicios", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoVandalismoSabotaje)
+            {
+                fields.TryGetValue("RiesgoVandalismoSabotaje", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoDeslizamiento)
+            {
+                fields.TryGetValue("RiesgoDeslizamiento", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoDeslave)
+            {
+                fields.TryGetValue("RiesgoDeslave", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoDerrumbe)
+            {
+                fields.TryGetValue("RiesgoDerrumbe", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoHundimiento)
+            {
+                fields.TryGetValue("RiesgoHundimiento", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoSocavon)
+            {
+                fields.TryGetValue("RiesgoSocavon", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoInundación)
+            {
+                fields.TryGetValue("RiesgoInundación", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoCondicionSantana)
+            {
+                fields.TryGetValue("RiesgoCondicionSantana", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoLluvias)
+            {
+                fields.TryGetValue("RiesgoLluvias", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoHeladas)
+            {
+                fields.TryGetValue("RiesgoHeladas", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoGranizadas)
+            {
+                fields.TryGetValue("RiesgoGranizadas", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoEpidemia)
+            {
+                fields.TryGetValue("RiesgoEpidemia", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoLluviaAcida)
+            {
+                fields.TryGetValue("RiesgoLluviaAcida", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoPandemia)
+            {
+                fields.TryGetValue("RiesgoPandemia", out toSet);
+                toSet.SetValue("Yes");
+            }
+
+            if (RiesgoPlagas)
+            {
+                fields.TryGetValue("RiesgoPlagas", out toSet);
+                toSet.SetValue("Yes");
+            }
+        }
+
         public void generateFile()
         {
 
@@ -73,15 +324,64 @@ namespace stationconsoleapp
             pBlank.Add("\n");
             pBlank.Add("\n");
             document.Add(pBlank);
+
+
+
+
             // add content
-            //PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
+            Example1(
+                form,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+            );
+
             //IDictionary<String, PdfFormField> fields = form.GetFormFields();
 
             //PdfFormField toSet;
-            //fields.TryGetValue("HoraDespacho", out toSet);
-            //toSet.SetValue("James Bond");
+            //fields.TryGetValue("RiesgoIncendio", out toSet);
+            //toSet.SetValue("Yes");
 
-            //fields.TryGetValue("CasillaExample", out toSet);
+            //fields.TryGetValue("RiesgoDerramesMP", out toSet);
             //toSet.SetValue("Yes");
 
             ////////////////////////////////
