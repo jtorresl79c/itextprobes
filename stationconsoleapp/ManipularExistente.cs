@@ -113,7 +113,7 @@ namespace stationconsoleapp
             Table table = new Table(UnitValue.CreatePercentArray(tableColumns))
                               .UseAllAvailableWidth();
 
-            table.AddCell(new Cell().Add(dog));
+            table.AddCell(new Cell().Add(dog).Add((new Paragraph("Descripcion Imagen 1"))));
             table.AddCell(new Cell().Add(swamper));
 
             table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 1")));
