@@ -106,30 +106,36 @@ namespace stationconsoleapp
             //document.Add(p);
 
 
-            document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
-            document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+            //document.Add(new AreaBreak(AreaBreakType.LAST_PAGE));
+            //document.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
             float[] tableColumns = new float[] { 1, 1 };
             Table table = new Table(UnitValue.CreatePercentArray(tableColumns))
                               .UseAllAvailableWidth();
 
-            table.AddCell(new Cell().Add(dog));
-            table.AddCell(new Cell().Add(swamper));
+            table.AddCell(new Cell().Add(dog).Add((new Paragraph("Descripcion Imagen 1"))));
+            table.AddCell(new Cell().Add(swamper).Add(new Paragraph("Descripcion Imagen 1")));
 
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 1")));
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 2")));
+            table.AddCell(new Cell().Add(dog).Add((new Paragraph("Descripcion Imagen 1"))));
+            table.AddCell(new Cell().Add(swamper).Add(new Paragraph("Descripcion Imagen 1")));
 
-            table.AddCell(new Cell().Add(dog));
-            table.AddCell(new Cell().Add(swamper));
+            table.AddCell(new Cell().Add(dog).Add((new Paragraph("Descripcion Imagen 1"))));
+            table.AddCell(new Cell().Add(swamper).Add(new Paragraph("Descripcion Imagen 1")));
 
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 3")));
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 4")));
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 1")));
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 2")));
 
-            table.AddCell(new Cell().Add(dog));
-            table.AddCell(new Cell().Add(swamper));
+            //table.AddCell(new Cell().Add(dog));
+            //table.AddCell(new Cell().Add(swamper));
 
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 5")));
-            table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 6")));
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 3")));
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 4")));
+
+            //table.AddCell(new Cell().Add(dog));
+            //table.AddCell(new Cell().Add(swamper));
+
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 5")));
+            //table.AddCell(new Cell().Add(new Paragraph("Descripcion Imagen 6")));
 
             document.Add(table);
 
