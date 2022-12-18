@@ -39,8 +39,11 @@ namespace stationconsoleapp
             //ActaCircunstanciada ac = new ActaCircunstanciada();
             //ac.generateFile();
 
-            ManipularExistente me = new ManipularExistente();
-            me.generateFile();
+            //ManipularExistente me = new ManipularExistente();
+            //me.generateFile();
+
+            ReporteEmergencia re = new ReporteEmergencia();
+            re.generateFile();
 
 
             //NumberPage np = new NumberPage();
